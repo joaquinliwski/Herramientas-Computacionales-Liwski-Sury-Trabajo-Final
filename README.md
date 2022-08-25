@@ -8,3 +8,5 @@ A continuación el DOI del paper: 10.1257/pol.6.4.71
 
 Los datos son de libre acceso, puede encontrarlos también en https://www.openicpsr.org/openicpsr/project/114886/version/V1/view .
 
+El shapefile fue descargado de https://idegeo.centrogeo.org.mx/layers/geonode%3Amunicipios_mx_feb2018 .
+
