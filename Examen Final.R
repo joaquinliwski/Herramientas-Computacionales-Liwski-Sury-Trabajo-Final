@@ -2,7 +2,8 @@ setwd("C:/Users/Joaquin/Desktop/UdeSA/Maestría en Economía/Herramientas Computac
 #Cargo Paquetes
 suppressMessages({
   if(!require("pacman")) install.packages("pacman")
-  pacman::p_load("tidyverse","readxl","haven","sf","rgdal","RecordLinkage")
+  pacman::p_load("tidyverse","readxl","haven","sf","rgdal","RecordLinkage",
+                 "rmapshaper","geojsonio")
 })
 rm(list=ls())
 
@@ -28,13 +29,19 @@ merge_ss_eneu_final$descripcion_municipio<-str_to_title(merge_ss_eneu_final$desc
 
 #Inporto SHP
 #municipioshp <- read_sf("Data, figuras y do originales/municipios_mx_feb2018/municipios_mx_feb2018.shp") #faster
-municipio <- readOGR("Data, figuras y do originales/municipios_mx_feb2018/municipios_mx_feb2018.shp")
-#plot(municipioshp)
-#Names
-municipio@data$NOMGEO<-str_to_title(iconv(municipio@data$NOMGEO, to = 'Latin1'))
-#Paso a numeric la variable en base a la cual voy a unir.
-municipio@data$CVEGEO<-as.numeric(municipio@data$CVEGEO)
-#Agrego al poligono la data para unir a los demas
-municipio@data<-municipio@data%>%left_join(merge_ss_eneu_final,by=c("CVEGEO"="municipality"))
+municipio <- st_read("Data, figuras y do originales/municipios_mx_feb2018/municipios_mx_feb2018.shp", options = "ENCODING=WINDOWS-1252")
+municipio <- ms_simplify(municipio) #para que no sea tan pesado
+municipio$CVEGEO<-as.numeric(municipio$CVEGEO)
+municipio<-municipio%>%left_join(merge_ss_eneu_final, by=c("cvemun"="municipality"))
+
+
+municipiocaract<-municipio%>%left_join(caract_muni, by=c("cvemun"))
+
+ggplot(municipiocaract) + 
+  geom_sf(colour='black', aes(fill=as.factor(urban),color=as.factor(urban)))
+
+
+
+
 
 
