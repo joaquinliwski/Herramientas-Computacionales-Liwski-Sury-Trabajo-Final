@@ -3,7 +3,8 @@ setwd("C:/Users/Joaquin/Desktop/UdeSA/Maestría en Economía/Herramientas Computac
 suppressMessages({
   if(!require("pacman")) install.packages("pacman")
   pacman::p_load("tidyverse","readxl","haven","sf","rgdal","RecordLinkage",
-                 "rmapshaper","geojsonio", "gganimate","gapminder","sfheaders")
+                 "rmapshaper","geojsonio", "gganimate","gapminder","sfheaders",
+                 "xtable", "scales")
 })
 rm(list=ls())
 
@@ -40,6 +41,7 @@ source("sources/Beneficiarios SP.R") #Beneficiarios Seguro Popular 2002-2009
 source("sources/employement.R") #Trabajo
 source("sources/affiliation.R") #Afiliados a cada seguro, replica figura 3
 source("sources/corr.R") #Correlacion entrada vs poblacion
+
 
 
 

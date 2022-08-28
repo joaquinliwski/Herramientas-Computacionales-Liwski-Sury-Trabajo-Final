@@ -84,4 +84,43 @@ ggsave("employerspob.eps", plot = last_plot(),
        width = 200, height = 135, units = "mm") #lo guardo como eps
 #28 porciento de empleadores algunos
 
-rm(list=c('empcaract','employementfull','employement',"a","b",'ylim.prim',"ylim.sec"))
+
+#Tabla con proporcion de cada tamaño empleados
+propemployees<-employees%>%filter(quarter==4)%>% #filtro solo cuarto trimestre
+  group_by(year)%>%summarise( #agrupo por anio y calculo
+  "1 Empleado"=sum(emp_size_1,na.rm = T)/sum(emp_t,na.rm=T),
+  "2 a 5 Empleados"=sum(emp_size_2_5,na.rm = T)/sum(emp_t,na.rm=T),
+  "6 a 50 Empleados"=sum(emp_size_6_50,na.rm = T)/sum(emp_t,na.rm=T),
+  "51 a 250 Empleados"=sum(emp_size_51_250,na.rm = T)/sum(emp_t,na.rm=T),
+  "251 a 500 Empleados"=sum(emp_size_251_500,na.rm = T)/sum(emp_t,na.rm=T),
+  "501 a 1000 Empleados"=sum(emp_size_501_1000,na.rm = T)/sum(emp_t,na.rm=T),
+  "Mas de 1000 Empleados"=sum(emp_size_1000,na.rm = T)/sum(emp_t,na.rm=T)
+)
+#paso a porcentaje
+propemployees[,2:ncol(propemployees)]<-round(propemployees[,2:ncol(propemployees)] * 100,digits=1)
+#guardo la tabla
+write(print(xtable(propemployees,digits=c(0,0,2,2,2,2,2,2,2)
+                   , caption="Porcentaje de Empleados en firmas por tamaño y año (cuarto trimestre).")),
+      file="outputs/propemployees.tex")
+
+#Tabla con proporcion de cada tamaño empleados 
+propemployers<-employers%>%filter(quarter==4)%>% #filtro cuarto trimestre
+  group_by(year)%>%summarise( #agrupo por anio y calculo
+    "1 Empleado"=sum(pat_size_1,na.rm = T)/sum(pat_t,na.rm=T),
+    "2 a 5 Empleados"=sum(pat_size_2_5,na.rm = T)/sum(pat_t,na.rm=T),
+    "6 a 50 Empleados"=sum(pat_size_6_50,na.rm = T)/sum(pat_t,na.rm=T),
+    "51 a 250 Empleados"=sum(pat_size_51_250,na.rm = T)/sum(pat_t,na.rm=T),
+    "251 a 500 Empleados"=sum(pat_size_251_500,na.rm = T)/sum(pat_t,na.rm=T),
+    "501 a 1000 Empleados"=sum(pat_size_501_1000,na.rm = T)/sum(pat_t,na.rm=T),
+    "Mas de 1000 Empleados"=sum(pat_size_1000,na.rm = T)/sum(pat_t,na.rm=T)
+  )
+#paso a porcentaje
+propemployers[,2:ncol(propemployers)]<-round(propemployers[,2:ncol(propemployers)] * 100,digits=1)
+#guardo la tabla
+write(print(xtable(propemployers,digits=c(0,0,2,2,2,2,2,2,2)
+                   , caption="Porcentaje de Empleadores en firmas por tamaño y año (cuarto trimestre).")),
+      file="outputs/propemployers.tex")
+
+
+rm(list=c('empcaract','employementfull','employement',"a","b",
+          'ylim.prim',"ylim.sec","propemployees","propemployers"))
