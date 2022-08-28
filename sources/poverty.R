@@ -5,7 +5,7 @@ municipiopoverty<-municipio%>%left_join(Population_Poverty, by=c("cvemun")) #joi
 ggplot(municipiopoverty) + 
   geom_sf(colour='black', aes(fill=pobreza_alim2000), size = 0.000005)+ #tipo de figura y aes
   labs(x = "Longitud", y = "Latitud",   #cambio detalles
-       fill = "",
+       fill = "Porcentaje",
        title = "Porcentaje de Poblacion en Pobreza Alimentaria (Indigencia)",
        subtitle = "por Municipio, Mexico 2000",
        caption = "Fuente: Censo General de Población y Vivienda 2000") +
@@ -23,7 +23,7 @@ ggsave("povertyalim.eps", plot = last_plot(),
 ggplot(municipiopoverty) + 
   geom_sf(colour='black', aes(fill=pobreza_pat2000), size = 0.000005)+ #tipo de figura y aes
   labs(x = "Longitud", y = "Latitud",   #cambio detalles
-       fill = "",
+       fill = "Porcentaje",
        title = "Porcentaje de Poblacion en Pobreza por Ingresos",
        subtitle = "por Municipio, Mexico 2000",
        caption = "Fuente: Censo General de Población y Vivienda 2000") +

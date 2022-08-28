@@ -59,7 +59,7 @@ ggplot() +
         legend.position = c(.8,.8),
         legend.background = element_blank()
   )+
-  scale_fill_gradient2(low = "#FF6962", mid="#FDFD96", high = "#77DD77",midpoint = 25 ,limits=c(0,60))
+  scale_fill_gradient2(low = "#FF6962", mid="#FDFD96", high = "#77DD77",midpoint = 20 ,limits=c(0,50))
 ggsave("employeespob.eps", plot = last_plot(), 
        path = "outputs", 
        width = 200, height = 135, units = "mm") #lo guardo como eps

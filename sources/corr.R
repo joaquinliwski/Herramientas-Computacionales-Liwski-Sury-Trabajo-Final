@@ -13,7 +13,7 @@ entrydate<-municipiosp%>%group_by(cvemun)%>%slice(which.min(date))
 entrydate<-entrydate%>%left_join(caract_muni, by=c("cvemun"))
 
 ggplot(entrydate,aes(x=date,y=log(populationb)))+
-  geom_point(alpha=.3,color="#b8d8be")+
+  geom_point(color="#b8d8be")+
   geom_smooth(method = lm, se = FALSE,color="black")+ #para ver direccion
   annotate("text", x = as.Date("2008-06-01"), y = 13,
            label = expression(beta*"=-40.14"), parse = TRUE)+
@@ -29,5 +29,5 @@ ggplot(entrydate,aes(x=date,y=log(populationb)))+
   )
 ggsave("Correlacion Cami.eps", plot = last_plot(), 
        path = "outputs", 
-       width = 200, height = 135, units = "mm") #lo guardo como eps
+       width = 200, height = 200, units = "mm") #lo guardo como eps
 rm(list = c("municipiosp","entrydate"))

@@ -93,6 +93,7 @@ hist(x = caract_muni$inf, prob = TRUE, main = "Informalidad mexicana por municip
      breaks = 20)
 lines(density(caract_muni$inf), lwd = 2, col = 'black')
 dev.off()
+dev.off()
 
 
 #Histograma insured 2000
@@ -110,6 +111,7 @@ hist(x = caract_muni$insured, prob = TRUE, main = "Poblacion mexicana asegurada 
      add = TRUE)
 lines(density(caract_muni$insured), lwd = 2, col = 'black')
 dev.off()
+dev.off()
 
 #PLOT Desempleo
 ggplot(municipiocaract) + 
@@ -117,14 +119,15 @@ ggplot(municipiocaract) +
   labs(x = "Longitud", y = "Latitud",   #cambio detalles
        fill = "",
        title = "Tasa de Desempleo",
-       subtitle = "por Municipio, Mexico",
+       subtitle = "por Municipio, Mexico (Desempleo menor a 4%, 98% de distribucion)",
        caption = "Fuente: Censo General de Población y Vivienda 2000") +
   theme_minimal()+ #lo pongo bonito
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         legend.position = c(.8,.8),
         legend.background = element_blank()
   )+
-  scale_fill_gradient2(low="#77dd77", high="#ff6961")#revertimos el original pattern
+  scale_fill_gradient2(high = "#FF6962", mid="#FDFD96", low = "#77DD77",
+                       midpoint = 0.02 ,limits=c(0,0.04))
 ggsave("unemployement.eps", plot = last_plot(), 
        path = "outputs", 
        width = 200, height = 135, units = "mm") #lo guardo como eps

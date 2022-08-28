@@ -9,7 +9,7 @@ options(scipen=999)#para que no aparezca con scientific notation
 mapagif<- ggplot(municipiosp%>%filter(!is.na(date))) + 
   geom_sf(colour='black', aes(fill=ind), size = 0.000005)+ #tipo de figura y aes
   labs(x = "Longitud", y = "Latitud",   #cambio detalles
-       fill = "",
+       fill = "Cantidad de Adheridos",
        title = "Seguro Popular - México",
        subtitle = "Individuos Adheridos Por Municipio\n{frame_time}",
        caption = "Fuente:IMSS") +
@@ -20,7 +20,7 @@ mapagif<- ggplot(municipiosp%>%filter(!is.na(date))) +
   )+scale_fill_gradient2(low="white",high="black",limits=c(1,286144))+#revertimos el original pattern
 transition_time(date) 
 num_frames <- 29
-animate(mapagif,nframes=num_frames,fps=1,duration=29,height = 466.4, width = 655.52)
+animate(mapagif,nframes=num_frames,fps=2,duration=15,height = 732.8, width = 1061.04)
 anim_save("outputs/SP.gif")
 
 #elimino todo lo que aca se agrega
