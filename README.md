@@ -10,3 +10,10 @@ Los datos son de libre acceso, puede encontrarlos también en https://www.openic
 
 El shapefile fue descargado de https://idegeo.centrogeo.org.mx/layers/geonode%3Amunicipios_mx_feb2018 .
 
+"bosch2014.pdf" es el paper.
+
+En la carpeta "Data, figuras y do originales" se puede encontrar los datos de los autores, sus figuras y sus archivos.do; ademas se puede encontrar el shapefile de Mexico a nivel municipio. 
+
+En la carpeta "outputs" se encuentran los graficos resultantes de correr el script "Examen Final.R". Hay mapas, replicas de figuras y figuras nuevas.
+
+"Examen Final.R" es el script principal. En este se cargan y limpian los datos. Luego se corren desde este mismo los distintos archivos de la carpeta "sources", que generan los graficos para cada una de las bases de datos.
