@@ -17,7 +17,7 @@ mapagif<- ggplot(municipiosp%>%filter(!is.na(date))) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         legend.position = c(.8,.8),
         legend.background = element_blank()
-  )+scale_fill_gradient2(low="white",mid="grey",high="black",midpoint = 3000, limits=c(1,286144))+#revertimos el original pattern
+  )+scale_fill_gradient2(low="white",high="black",limits=c(1,286144))+#revertimos el original pattern
 transition_time(date) 
 num_frames <- 29
 animate(mapagif,nframes=num_frames,fps=1,duration=29,height = 466.4, width = 655.52)
