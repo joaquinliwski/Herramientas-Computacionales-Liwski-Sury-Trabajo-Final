@@ -3,10 +3,12 @@ employement<-employees%>%full_join(employers,by=c("municipio","year","quarter"))
 
 employementfull<-employement%>%group_by(year,quarter)%>%
   summarise("employees"=sum(emp_t,na.rm=T),"employers"=sum(pat_t,na.rm=T))
-
+         
 #agregamos date variable
 employementfull$month<-3*employementfull$quarter
 employementfull$date<-as.Date(paste0(employementfull$year,"-",employementfull$month,"-01"))
+
+
 
 
 #Plot trabajo en millions
@@ -121,6 +123,50 @@ write(print(xtable(propemployers,digits=c(0,0,2,2,2,2,2,2,2)
                    , caption="Porcentaje de Empleadores en firmas por tamaño y año (cuarto trimestre).")),
       file="outputs/propemployers.tex")
 
+#Creo proporcion de empleo en firmas chicas
+employement$emp_small<-(employement$emp_size_1+employement$emp_size_2_5+employement$emp_size_6_50)
+employement$pat_small<-(employement$pat_size_1+employement$pat_size_2_5+employement$pat_size_6_50)
+
+employementprop<-employement%>%group_by(year,quarter)%>%
+  summarise("emp_small_prop"=sum(emp_small,na.rm=T)/sum(emp_t,na.rm=T),"pat_small_prop"=sum(pat_small,na.rm=T)/sum(pat_t,na.rm=T))
+
+#agregamos date variable
+employementprop$month<-3*employementprop$quarter
+employementprop$date<-as.Date(paste0(employementprop$year,"-",employementprop$month,"-01"))
+
+
+
+#Plot trabajo en Firmas Chicas proporcion
+#axis plot
+ylim.prim <- c(0.3059, 0.353)   
+ylim.sec <- c(0.945, 0.96) 
+b <- diff(ylim.prim)/diff(ylim.sec)
+a <- ylim.prim[1] - b*ylim.sec[1]
+
+
+ggplot(employementprop%>%filter(emp_small_prop>0),aes(x=date))+
+  geom_line(aes(y=emp_small_prop,color="Proporcion Empleados"),linetype = "dashed")+
+  geom_line(aes(y = (a + pat_small_prop*b),color="Proporcion Empleadores"))+
+  geom_vline(xintercept=as.Date("2003-01-01"), colour="black",linetype="dotted",size=1.3) +
+  geom_text(aes(x=as.Date("2002-11-01"), label="2003", y=0.3175), colour="black", angle=90) +
+  scale_y_continuous(
+    # Primer Eje
+    name = "Proporcion Empleados",
+    #segundo eje
+    sec.axis = sec_axis(trans =~ (. - a)/b, name="Proporcion Empleadores")
+  ) +labs(x = "Fecha",   #cambio detalles
+          color = "",
+          title = "Evolucion de Proporcion Empleados y Empleadores Firmas Chicas",
+          subtitle = "Firmas  mas afectadas por Seguro Popular",
+          caption = "Fuente: IMSS y Bosch 2014") +
+  theme_minimal() +#lo pongo bonito
+  theme(legend.position="bottom")
+ggsave("smallfirms.eps", plot = last_plot(), 
+       path = "outputs", 
+       width = 200, height = 135, units = "mm") #lo guardo como eps
+
+
 
 rm(list=c('empcaract','employementfull','employement',"a","b",
-          'ylim.prim',"ylim.sec","propemployees","propemployers"))
+          'ylim.prim',"ylim.sec","propemployees","propemployers",
+          "employementprop"))
