@@ -23,9 +23,9 @@ ggplot(employementfull%>%filter(employers>0),aes(x=date))+
   geom_line(aes(y = (a + employers*b/1000000),color="Empleadores (en millones)"))+
   scale_y_continuous(
     # Primer Eje
-    name = "Empleadores (en millones)",
+    name = "Empleados (en millones)",
     #segundo eje
-    sec.axis = sec_axis(trans =~ (. - a)/b, name="Empleados (en millones)")
+    sec.axis = sec_axis(trans =~ (. - a)/b, name="Empleadores (en millones)")
   ) +labs(x = "Fecha",   #cambio detalles
           color = "",
           title = "Número de Empleadores y Empleados Afiliados al Seguro Social Mexicano",
