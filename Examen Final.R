@@ -41,7 +41,7 @@ source("sources/Beneficiarios SP.R") #Beneficiarios Seguro Popular 2002-2009
 source("sources/employement.R") #Trabajo
 source("sources/affiliation.R") #Afiliados a cada seguro, replica figura 3
 source("sources/corr.R") #Correlacion entrada vs poblacion
-
+source("sources/poverty.R") #Datos de pobreza
 
 
 
