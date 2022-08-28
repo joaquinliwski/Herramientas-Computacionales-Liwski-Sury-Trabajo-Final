@@ -34,9 +34,13 @@ municipio <- ms_simplify(municipio) #para que no sea tan pesado
 municipio$CVEGEO<-as.numeric(municipio$CVEGEO)
 municipio<-municipio%>%left_join(merge_ss_eneu_final, by=c("CVEGEO"="municipality"))
 
-#Graficos de Caracteristicas de Municipio
-source("sources/Caracteristicas Municipio.R")
-source("sources/Beneficiarios SP.R")
+#Graficos en base a datos, cada uno un archivo aparte
+source("sources/Caracteristicas Municipio.R") #Caracteristicas Municipio
+source("sources/Beneficiarios SP.R") #Beneficiarios Seguro Popular 2002-2009
+source("sources/employement.R") #Trabajo
+source("sources/affiliation.R") #Afiliados a cada seguro, replica figura 3
+source("sources/corr.R") #Correlacion entrada vs poblacion
+
 
 
 
